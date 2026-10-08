@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackArena | Hackathon Participation Portal</title>
+<style>
+:root{
+  --bg:#070b18;--card:#10172a;--card2:#151e35;--text:#f8fafc;
+  --muted:#a8b3c7;--line:#26334f;--blue:#5b8cff;--cyan:#22d3ee;
+  --purple:#a78bfa;--green:#34d399;--danger:#fb7185;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,Arial,sans-serif;background:
+  radial-gradient(circle at 15% 10%,#243a87 0,transparent 28%),
+  radial-gradient(circle at 85% 20%,#4c1d95 0,transparent 25%),var(--bg);
+  color:var(--text);min-height:100vh;line-height:1.5;
+}
+header{
+  position:sticky;top:0;z-index:10;backdrop-filter:blur(18px);
+  background:#070b18cc;border-bottom:1px solid #ffffff12;
+}
+.nav{width:min(1180px,92%);margin:auto;padding:17px 0;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:22px;font-weight:900;letter-spacing:.5px}.logo span{color:var(--cyan)}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+nav button{border:0;background:transparent;color:#cbd5e1;padding:9px 13px;border-radius:9px;cursor:pointer;font-weight:600}
+nav button:hover{background:#ffffff0d;color:white}
+.hero{width:min(1180px,92%);margin:45px auto 30px;padding:55px 45px;border:1px solid #ffffff14;border-radius:30px;
+background:linear-gradient(135deg,#111a35e8,#10152be8);box-shadow:0 25px 80px #0006;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;background:#22d3ee18;right:-90px;top:-100px;filter:blur(8px)}
+.kicker{display:inline-block;color:#67e8f9;background:#22d3ee12;border:1px solid #22d3ee30;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:bold;margin-bottom:18px}
+.hero h1{font-size:clamp(38px,7vw,72px);line-height:1.02;max-width:780px;margin-bottom:17px}
+.hero h1 span{background:linear-gradient(90deg,var(--cyan),var(--blue),var(--purple));-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:17px;max-width:700px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{border:0;border-radius:11px;padding:12px 18px;font-weight:800;cursor:pointer}
+.primary{background:linear-gradient(90deg,var(--blue),var(--purple));color:white}
+.secondary{background:#ffffff0d;border:1px solid #ffffff18;color:white}
+.primary:hover,.secondary:hover{transform:translateY(-2px)}
+main{width:min(1180px,92%);margin:auto}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:22px 0 30px}
+.stat{background:linear-gradient(145deg,#121b31,#0d1426);border:1px solid var(--line);border-radius:18px;padding:20px}
+.stat small{color:var(--muted)}.stat b{display:block;font-size:32px;margin-top:4px}
+.section{margin:35px 0}.section-title{margin-bottom:16px}
+.section-title h2{font-size:28px}.section-title p{color:var(--muted)}
+.card{background:#0f1729e8;border:1px solid var(--line);border-radius:20px;padding:24px;box-shadow:0 12px 40px #0003}
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px}
+.team-card{background:linear-gradient(145deg,#151f38,#0d1425);border:1px solid #ffffff12;border-radius:18px;padding:20px}
+.team-top{display:flex;justify-content:space-between;gap:10px;margin-bottom:14px}
+.team-card h3{font-size:19px}.badge{background:#2563eb22;color:#93c5fd;border:1px solid #2563eb44;padding:5px 9px;border-radius:999px;font-size:12px;white-space:nowrap}
+.meta{color:var(--muted);font-size:14px;margin:7px 0}
+.members{margin-top:15px;padding-top:13px;border-top:1px solid var(--line)}
+.member{display:flex;justify-content:space-between;gap:10px;padding:7px 0;font-size:14px}
+.member span:last-child{color:#93c5fd}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+label{font-size:13px;font-weight:700;color:#cbd5e1}
+input{width:100%;margin-top:7px;padding:12px;border-radius:10px;border:1px solid #334155;background:#080e1d;color:white;outline:none}
+input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #5b8cff18}
+.full{grid-column:1/-1}
+.member-form{border:1px solid var(--line);padding:18px;border-radius:15px;margin-top:15px;background:#0a1120}
+.member-form h3{margin-bottom:14px;color:#c4b5fd}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:800px}
+th,td{padding:13px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:#93c5fd;background:#111a2e}
+.empty{text-align:center;color:var(--muted);padding:35px}
+footer{text-align:center;color:#64748b;padding:45px 10px}
+.hidden{display:none}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.hero{padding:38px 25px}.form-grid{grid-template-columns:1fr}}
+@media(max-width:520px){.nav{align-items:flex-start;flex-direction:column}.hero{margin-top:25px}.stats{grid-template-columns:1fr 1fr}.stat b{font-size:25px}.hero h1{font-size:42px}nav{width:100%}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">⚡ Hack<span>Arena</span></div>
+    <nav>
+      <button onclick="go('home')">Home</button>
+      <button onclick="go('teams')">Teams</button>
+      <button onclick="go('register')">Register</button>
+      <button onclick="go('participants')">Participants</button>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="home">
+  <div class="kicker">🚀 COLLEGE HACKATHON PARTICIPATION PORTAL</div>
+  <h1>Build. <span>Innovate.</span> Compete.</h1>
+  <p>Organize hackathon participation in one place. Register teams, track events, departments, sections, roll numbers and every participant.</p>
+  <div class="hero-actions">
+    <button class="btn primary" onclick="go('register')">＋ Register a Team</button>
+    <button class="btn secondary" onclick="go('teams')">View Participating Teams →</button>
+  </div>
+</section>
+
+<main>
+  <section class="stats">
+    <div class="stat">👥 <small>Total Teams</small><b id="teamCount">0</b></div>
+    <div class="stat">🎯 <small>Participants</small><b id="participantCount">0</b></div>
+    <div class="stat">🏆 <small>Events</small><b id="eventCount">0</b></div>
+    <div class="stat">🏫 <small>Departments</small><b id="deptCount">0</b></div>
+  </section>
+
+  <section class="section" id="teams">
+    <div class="section-title"><h2>Participating Teams</h2><p>See who is participating and which event they represent.</p></div>
+    <div id="teamGrid" class="team-grid"></div>
+  </section>
+
+  <section class="section hidden" id="register">
+    <div class="section-title"><h2>Register a Hackathon Team</h2><p>Enter the event and participant details.</p></div>
+    <div class="card">
+      <form id="teamForm">
+        <div class="form-grid">
+          <div><label>Team Name</label><input id="teamName" required placeholder="Example: Code Warriors"></div>
+          <div><label>Hackathon / Event Name</label><input id="eventName" required placeholder="Example: Smart India Hackathon"></div>
+          <div><label>Number of Participants</label><input id="memberCount" type="number" min="1" max="20" value="4" required oninput="makeMembers()"></div>
+        </div>
+        <div id="members"></div>
+        <div class="actions">
+          <button class="btn primary" type="submit">✓ Save Team</button>
+          <button class="btn secondary" type="button" onclick="go('teams')">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="section hidden" id="participants">
+    <div class="section-title"><h2>Participant Directory</h2><p>Complete participant information for the registered teams.</p></div>
+    <div class="card">
+      <div class="table-wrap">
+        <table><thead><tr><th>Team</th><th>Event</th><th>Name</th><th>Roll Number</th><th>Department</th><th>Section</th></tr></thead>
+        <tbody id="participantTable"></tbody></table>
+      </div>
+      <div class="actions"><button class="btn secondary" onclick="exportCSV()">⬇ Export CSV</button><button class="btn" style="background:#fb7185;color:white" onclick="clearAll()">Clear All Data</button></div>
+    </div>
+  </section>
+</main>
+
+<footer>HackArena © 2026 • College Hackathon Participation Portal</footer>
+
+<script>
+let teams=JSON.parse(localStorage.getItem("hackArenaTeams")||"[]");
+
+function go(id){
+  document.querySelectorAll("main .section").forEach(s=>s.classList.add("hidden"));
+  if(id==="home"){document.getElementById("teams").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"});}
+  else {document.getElementById(id).classList.remove("hidden");document.getElementById(id).scrollIntoView({behavior:"smooth"});}
+  render();
+}
+function makeMembers(){
+  const n=Math.max(1,Math.min(20,Number(document.getElementById("memberCount").value)||1));
+  document.getElementById("memberCount").value=n;
+  let out="";
+  for(let i=1;i<=n;i++) out+=`
+    <div class="member-form">
+      <h3>Participant ${i}</h3>
+      <div class="form-grid">
+        <div><label>Participant Name</label><input class="pname" required placeholder="Full name"></div>
+        <div><label>Roll Number</label><input class="proll" required placeholder="Example: 24A81A0501"></div>
+        <div><label>Department</label><input class="pdept" required placeholder="Example: CSE"></div>
+        <div><label>Section</label><input class="psection" required placeholder="Example: A"></div>
+      </div>
+    </div>`;
+  document.getElementById("members").innerHTML=out;
+}
+document.getElementById("teamForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const names=[...document.querySelectorAll(".pname")],rolls=[...document.querySelectorAll(".proll")],depts=[...document.querySelectorAll(".pdept")],secs=[...document.querySelectorAll(".psection")];
+  const team={team:teamName.value.trim(),event:eventName.value.trim(),members:names.map((x,i)=>({name:x.value.trim(),roll:rolls[i].value.trim(),dept:depts[i].value.trim(),section:secs[i].value.trim()}))};
+  teams.push(team);localStorage.setItem("hackArenaTeams",JSON.stringify(teams));
+  alert("🎉 Team registered successfully!");
+  e.target.reset();memberCount.value=4;makeMembers();go("teams");
+});
+function render(){
+  const all=teams.flatMap(t=>t.members.map(m=>({...m,team:t.team,event:t.event})));
+  teamCount.textContent=teams.length;participantCount.textContent=all.length;
+  eventCount.textContent=new Set(teams.map(t=>t.event)).size;deptCount.textContent=new Set(all.map(x=>x.dept)).size;
+  teamGrid.innerHTML=teams.length?teams.map(t=>`<div class="team-card">
+    <div class="team-top"><h3>${esc(t.team)}</h3><span class="badge">${t.members.length} Members</span></div>
+    <div class="meta">🏆 ${esc(t.event)}</div>
+    <div class="meta">🏫 ${esc([...new Set(t.members.map(x=>x.dept))].join(", "))} · Section ${esc([...new Set(t.members.map(x=>x.section))].join(", "))}</div>
+    <div class="members">${t.members.map(m=>`<div class="member"><span>${esc(m.name)}</span><span>${esc(m.roll)}</span></div>`).join("")}</div>
+  </div>`).join(""):`<div class="card empty">No teams registered yet. Click <b>Register a Team</b> to add the first team.</div>`;
+  participantTable.innerHTML=all.length?all.map(m=>`<tr><td>${esc(m.team)}</td><td>${esc(m.event)}</td><td>${esc(m.name)}</td><td>${esc(m.roll)}</td><td>${esc(m.dept)}</td><td>${esc(m.section)}</td></tr>`).join(""):`<tr><td colspan="6" class="empty">No participants registered.</td></tr>`;
+}
+function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));}
+function clearAll(){if(confirm("Are you sure you want to delete all registration data?")){teams=[];localStorage.removeItem("hackArenaTeams");render();}}
+function exportCSV(){
+  const all=teams.flatMap(t=>t.members.map(m=>[t.team,t.event,m.name,m.roll,m.dept,m.section]));
+  if(!all.length){alert("No participant data to export.");return}
+  const csv=[["Team","Event","Name","Roll Number","Department","Section"],...all].map(r=>r.map(x=>`"${String(x).replace(/"/g,'""')}"`).join(",")).join("\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="hackathon_participants.csv";a.click();
+}
+makeMembers();render();
+</script>
+</body>
+</html>
